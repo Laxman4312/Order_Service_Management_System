@@ -6,8 +6,9 @@ import PageView from 'components/Page';
 import OrderDialog from './OrderDialog';
 import { useOrders } from 'hooks/api-custom-hook/useOrders';
 import { usePagination } from 'components/custom-table/usePagination';
+import {  IconBrandWhatsapp } from '@tabler/icons-react';
 
-import { useRestore } from 'hooks/useRestore';
+//import { useRestore } from 'hooks/useRestore';
 import { useDebounce } from 'hooks/useDebounce';
 import {  OrderImage } from 'config/icons';
 import TableButtons from 'components/TableButtons';
@@ -124,51 +125,80 @@ const handleDelete = (data) => {
 //   };
 
   // Configuration objects
-  const tableConfig = {
-    buttons: 
-       [
-          {
-            handleFunction: handleView,
-            title: 'View Item',
-            color: 'info',
-            name: 'View',
-          },
-          {
-            handleFunction: handleEdit,
-            title: 'Edit Item',
-            color: 'info',
-            name: 'Edit',
-          },
-          {
-            handleFunction: handleDelete,
-            title: 'Delete Item',
-            color: 'error',
-            name: 'Delete',
-          },
-        ],
-    headings: [
-        { id: 'order_no', label: 'Order No' },
-        { id: 'customer_name', label: 'Customer Name' },
-        { id: 'customer_contact', label: 'Customer Contact' },
-        { id: 'customer_address', label: 'Customer Address' },
-        { id: 'product', label: 'Product' },
-        { id: 'total_amount', label: 'Total Amount', type: 'currency' },
-        { id: 'balance_amount', label: 'Balance Amount', type: 'currency' },
-        { id: 'shipping_carrier', label: 'Shipping Carrier' },
-        { id: 'created_at', label: 'Created At', type: 'datetime' },
-        { id: 'updated_at', label: 'Updated At', type: 'datetime' },
-      {
-        id: 'actions',
-        label: 'Actions',
-        type: 'button',
-        align: 'center',
-        disableSorting: true,
-        render: (row, index) => (
-          <TableButtons buttons={tableConfig.buttons} id={row.id} item={row} index={index} />
-        ),
-      },
-    ],
+
+
+    const handleSendWhatsApp = (item) => {
+    if (item.whatsappUrl) {
+      window.open(item.whatsappUrl, '_blank');
+    } else {
+      snackbarNotification({
+        message: 'WhatsApp link not available for this service.',
+        severity: 'warning',
+      });
+    }
   };
+const tableConfig = {
+  buttons: [
+    {
+      handleFunction: handleView,
+      title: 'View Item',
+      color: 'info',
+      name: 'View',
+    },
+    {
+      handleFunction: handleEdit,
+      title: 'Edit Item',
+      color: 'info',
+      name: 'Edit',
+    },
+    {
+      handleFunction: handleDelete,
+      title: 'Delete Item',
+      color: 'error',
+      name: 'Delete',
+    },
+    {
+      handleFunction: handleSendWhatsApp,
+      title: 'Send WhatsApp',
+      color: 'success',
+      name: 'WhatsApp',
+      icon: IconBrandWhatsapp,
+    },
+  ],
+  headings: [
+    { id: 'order_no', label: 'Order No' },
+    { id: 'customer_name', label: 'Customer Name' },
+    { id: 'customer_contact', label: 'Customer Contact' },
+    { id: 'customer_address', label: 'Customer Address' },
+    { id: 'product', label: 'Product' },
+    { id: 'total_amount', label: 'Total Amount', type: 'currency' },
+    { id: 'balance_amount', label: 'Balance Amount', type: 'currency' },
+    { id: 'shipping_carrier', label: 'Shipping Carrier' },
+    { id: 'created_at', label: 'Created At', type: 'datetime' },
+    { id: 'updated_at', label: 'Updated At', type: 'datetime' },
+    {
+      id: 'actions',
+      label: 'Actions',
+      type: 'button',
+      align: 'center',
+      disableSorting: true,
+      render: (row, index) => {
+        console.log('Row in actions render:', row);
+
+        const filteredButtons = tableConfig.buttons.filter((btn) => {
+          if (btn.name === 'WhatsApp') {
+            const hasWhatsapp = Boolean(row.whatsappUrl);
+            console.log(`Checking WhatsApp button for row id ${row.id}: ${hasWhatsapp}`);
+            return hasWhatsapp;
+          }
+          return true;
+        });
+
+        return <TableButtons buttons={filteredButtons} item={row} index={index} />;
+      },
+    },
+  ],
+};
 
   const pageConfig = {
     isLoading,

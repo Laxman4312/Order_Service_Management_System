@@ -17,7 +17,7 @@ import Spare from '../assets/images/module-icons/spare-parts.png';
 import EmptyBox from '../assets/images/component-images/no-records.png';
 import Link from '../assets/images/component-images/link.png';
 import Dashboard from '../assets/images/component-images/dashboard.png';
-import Logo from '../assets/images/logo/logo.png';
+import Logo1 from '../assets/images/logo/logo1.png';
 import Impression from '../assets/images/logo/favicon.png';
 import AjinkyaImpression from '../assets/images/logo/ajinkya_impression.png';
 import RuntimeImg from '../assets/images/component-images/runtime-error.svg';
@@ -26,7 +26,7 @@ import Order from '../assets/images/component-images/delivery-man.png';
 
 
 //Logo
-export const BrandLogo = Logo;
+export const BrandLogo = Logo1;
 export const Favicon = Impression;
 export const FiltersIcoon = FiltersImg
 

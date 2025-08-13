@@ -11,6 +11,8 @@ export const API_URLS = {
     USERS: '/auth',
     ORDERS: '/orders',
     ORDERSTATUS:'/statuses/orders',
+    SERVICES: '/services',
+    SERVICESTATUS:'/statuses/services',
     // LOCATION_TYPE: '/material-code',
     // LOCATION_TYPE: '/location-type',
     // LOCATION_META_DATA: '/location-metadata',

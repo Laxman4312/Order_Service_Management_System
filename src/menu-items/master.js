@@ -14,7 +14,7 @@ const icons = {
 const master = {
   id: 'master',
   title: 'Master',
-  caption: 'Users, Locations',
+  caption: 'Orders, Services',
   // caption: 'Department, Users',
   type: 'group',
   children: [
@@ -37,6 +37,22 @@ const master = {
           title: 'Orders',
           type: 'item',
           url: '/orders',
+          breadcrumbs: false,
+        },
+      ],
+    },
+    {
+      id: 'servicelist',
+      title: 'Service List',
+      type: 'collapse',
+      icon: icons.IconBuilding,
+   
+      children: [
+        {
+          id: 'services',
+          title: 'Services',
+          type: 'item',
+          url: '/services',
           breadcrumbs: false,
         },
       ],

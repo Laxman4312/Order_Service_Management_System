@@ -22,6 +22,7 @@ const iconMap = {
   handleAdd: IconPlus,
   handleRestore: IconRefresh,
   handlePrint: IconQrcode,
+  handleSendWhatsApp: IconQrcode, // Assuming WhatsApp uses the QR code icon
   // Add more mappings as needed
 };
 
