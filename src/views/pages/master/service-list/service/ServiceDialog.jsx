@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import { triggerIsSavingFlag } from 'store/slices/general';
 import { useServices } from 'hooks/api-custom-hook/useServices';
 import { useServiceStatus } from 'hooks/api-custom-hook/useServiceStatus';
-import { OrderImage } from 'config/icons';
+import { ServiceImage } from 'config/icons';
 import FormLayout from 'components/form-layout/FormLayout';
 import ProjectDialog from 'components/ProjectDialog';
 import Form from 'components/form-management';
@@ -211,7 +211,7 @@ const ServiceDialog = ({ formData, isOpen, dialogType, handleCloseModal, transit
         subtitle="Service Management"
         transitions={transitions}
         handleClose={handleCloseModal}
-        image={OrderImage}
+        image={ServiceImage}
       >
         <Form
           initialValues={getInitialValues()}

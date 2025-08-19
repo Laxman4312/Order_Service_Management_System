@@ -18,6 +18,7 @@ import useConfirmationStore from 'hooks/useConfirmationStore';
 
 import { triggerIsSavingFlag } from 'store/slices/general';
 import useSnackbarStore from 'hooks/useSnackbarStore';
+import { isAction } from 'redux';
 
 const OrderManagement = () => {
   // Custom hooks
@@ -182,6 +183,7 @@ const tableConfig = {
       type: 'button',
       align: 'center',
       disableSorting: true,
+      isAction: true,
       render: (row, index) => {
         console.log('Row in actions render:', row);
 

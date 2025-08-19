@@ -18,11 +18,13 @@ import EmptyBox from '../assets/images/component-images/no-records.png';
 import Link from '../assets/images/component-images/link.png';
 import Dashboard from '../assets/images/component-images/dashboard.png';
 import Logo1 from '../assets/images/logo/logo1.png';
-import Impression from '../assets/images/logo/favicon.png';
+import Impression from '../assets/images/logo/24-7.png';
 import AjinkyaImpression from '../assets/images/logo/ajinkya_impression.png';
 import RuntimeImg from '../assets/images/component-images/runtime-error.svg';
 import  FiltersImg  from '../assets/images/component-images/filter.png';
 import Order from '../assets/images/component-images/delivery-man.png';
+import OrderImg from '../assets/images/component-images/checklist (1).png';
+import ServiceImg from '../assets/images/component-images/customer-service.png';
 
 
 //Logo
@@ -33,6 +35,8 @@ export const FiltersIcoon = FiltersImg
 
 //Module Icons
 export const DepartmentsIcon = Departments;
+export const OrderImage1 = OrderImg;
+export const ServiceImage = ServiceImg;
 export const OrderImage= Order;
 export const  UsersIcon = Users;
 export const LocationTypeIcon = LocationType;

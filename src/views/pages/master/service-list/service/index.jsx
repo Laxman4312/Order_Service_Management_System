@@ -16,7 +16,7 @@ import useSnackbarStore from 'hooks/useSnackbarStore';
 import useMultiDialogNavigation from 'hooks/useMultiDialogNavigation';
 
 import { triggerIsSavingFlag } from 'store/slices/general';
-import { OrderImage } from 'config/icons';
+import { ServiceImage } from 'config/icons';
 
 const ServiceManagement = () => {
   const dispatch = useDispatch();
@@ -145,6 +145,7 @@ const ServiceManagement = () => {
       label: 'Actions',
       type: 'button',
       align: 'center',
+      isActions: true,
       disableSorting: true,
       render: (row, index) => {
        // console.log('Row in actions render:', row);
@@ -166,7 +167,7 @@ const ServiceManagement = () => {
     isLoading,
     isError,
     title: 'Services',
-    pageFavicon: OrderImage,
+    pageFavicon: ServiceImage,
     pageButtons: [
       {
         buttonTitle: 'Add Services',

@@ -1,5 +1,5 @@
 // assets
-import { IconBuilding, IconUsers, IconUserPentagon, IconMapPin } from '@tabler/icons-react';
+import { IconBuilding, IconUsers, IconUserPentagon, IconMapPin,IconStatusChange } from '@tabler/icons-react';
 
 // constant
 const icons = {
@@ -7,6 +7,7 @@ const icons = {
   IconUsers,
   IconUserPentagon,
   IconMapPin,
+  IconStatusChange
 };
 
 // ==============================|| UTILITIES MENU ITEMS ||============================== //
@@ -57,6 +58,14 @@ const master = {
         },
       ],
     },
+    {
+      id: 'statuslist',
+      title: 'Statuses List',
+      type: 'item',
+      icon: icons.IconStatusChange,
+      url: '/status',
+      breadcrumbs: false, 
+    }
   ],
 };
 

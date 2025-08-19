@@ -16,7 +16,7 @@ import {
 import ProjectDialog from 'components/ProjectDialog';
 import FormLayout from 'components/form-layout/FormLayout';
 import Chip from 'ui-component/extended/Chip';
-import { OrderImage } from 'config/icons';
+import { ServiceImage } from 'config/icons';
 
 const ServiceInfo = ({ icon: Icon, label, value, chip }) => (
   <Box display="flex" alignItems="center">
@@ -117,7 +117,7 @@ const ServiceViewDialog = ({ isOpen, serviceData, handleCloseModal, transitions 
         subtitle="Service Management"
         transitions={transitions}
         handleClose={handleCloseModal}
-        image={OrderImage}
+        image={ServiceImage}
       >
         <Grid container spacing={3} sx={{ mt: 1 }}>
           {serviceDetails.map((detail, index) => (
