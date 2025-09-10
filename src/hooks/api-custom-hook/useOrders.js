@@ -38,14 +38,14 @@ export const useOrders = () => {
     }
   }, []);
 
-//   const restoreData = useCallback(async (params) => {
-//     try {
-//       const response = await binningRepository.restore(`/restore`, params);
-//       return response;
-//     } catch (err) {
-//       throw err;
-//     }
-//   }, []);
+  const restoreData = useCallback(async (params) => {
+    try {
+      const response = await orderRepository.restore(`/restore`, params);
+      return response;
+    } catch (err) {
+      throw err;
+    }
+  }, []);
   const { data, isLoading, isError, fetchData } = useDataFetching(fetchOrders);
 
   return {
@@ -56,6 +56,7 @@ export const useOrders = () => {
     createOrder,
     updateOrder,
     deleteOrder,
+    restoreData
    
  
   };

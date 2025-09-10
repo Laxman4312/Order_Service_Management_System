@@ -126,7 +126,7 @@ const ServiceManagement = () => {
       title: 'Send WhatsApp',
       color: 'success',
       name: 'WhatsApp',
-      icon: IconBrandWhatsapp, // Only reference the component, let TableButtons render it
+      icon: IconBrandWhatsapp, 
     },
   ];
 

@@ -70,6 +70,14 @@ async update(id, data) {
       throw error;
     }
   }
+// async restore(url) {
+//   try {
+//     return await this.axiosService.put(`${this.endpoint}${url}`);
+//   } catch (error) {
+//     console.error('Error in restore:', error);
+//     throw error;
+//   }
+// }
 
   async uploadFile(url, formData, config = {}) {
     try {

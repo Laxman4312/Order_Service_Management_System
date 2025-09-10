@@ -30,6 +30,7 @@ const ServiceDialog = ({ formData, isOpen, dialogType, handleCloseModal, transit
     customer_phone: '',
     customer_address: '',
     product_for_service: '',
+    service_details: '',
     estimated_service_cost: '',
     estimated_delivery_date: '',
     comments: '',
@@ -55,6 +56,7 @@ const ServiceDialog = ({ formData, isOpen, dialogType, handleCloseModal, transit
       required: true,
       startAdornment: '+91',
     },
+  
     {
       id: 'customer_address',
       name: 'customer_address',
@@ -96,6 +98,14 @@ const ServiceDialog = ({ formData, isOpen, dialogType, handleCloseModal, transit
       type: 'DATE',
       gridProps: { xs: 6 },
     },
+    {
+      id:'service_details',
+      name: 'service_details',
+      label: 'Service Details',
+      type: 'TEXT',
+      gridProps: { xs: 12},
+
+    },
 
     {
       id: 'comments',
@@ -119,6 +129,8 @@ const ServiceDialog = ({ formData, isOpen, dialogType, handleCloseModal, transit
     customer_address: Yup.string().required('Customer Address is required.'),
 
     product_for_service: Yup.string().required('Product for Service is required.'),
+
+    service_details: Yup.string().required('Service Details is required.'),
 
     estimated_service_cost: Yup.number()
       .typeError('Estimated Service Cost must be a number.')

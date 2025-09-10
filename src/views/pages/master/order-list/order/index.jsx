@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { IconUserPlus} from '@tabler/icons-react';
+import { IconUserPlus, IconUserCog, IconArrowBackUpDouble} from '@tabler/icons-react';
 
 import PageView from 'components/Page';
 import OrderDialog from './OrderDialog';
@@ -8,7 +8,7 @@ import { useOrders } from 'hooks/api-custom-hook/useOrders';
 import { usePagination } from 'components/custom-table/usePagination';
 import {  IconBrandWhatsapp } from '@tabler/icons-react';
 
-//import { useRestore } from 'hooks/useRestore';
+import { useRestore } from 'hooks/useRestore';
 import { useDebounce } from 'hooks/useDebounce';
 import {  OrderImage } from 'config/icons';
 import TableButtons from 'components/TableButtons';
@@ -33,9 +33,10 @@ const OrderManagement = () => {
   const openConfirmation = useConfirmationStore((state) => state.open);
   // State management
   const [formData, setFormData] = React.useState(null);
+  const { restoreIsDeleted, handleRestoreChange } = useRestore();
 
   // Custom hooks for functionality
-  const { data, isLoading, isError, fetchOrders, deleteOrder} = useOrders();
+  const { data, isLoading, isError, fetchOrders, deleteOrder, restoreData} = useOrders();
 
   const { page, rowsPerPage, totalCount, handlePageChange, handleRowsPerPageChange } =
     usePagination({ totalCount: data?.count ?? 0 });
@@ -59,11 +60,11 @@ const OrderManagement = () => {
         page: page + 1,
         pageSize: rowsPerPage,
         query: debouncedQuery,
-        
+        ...(restoreIsDeleted && { is_deleted: true }),
       };
       await fetchOrders(params);
     })();
-  }, [page, rowsPerPage, isSaving, debouncedQuery, fetchOrders]);
+  }, [page, rowsPerPage,restoreIsDeleted, isSaving, debouncedQuery, fetchOrders]);
 
   // Event handlers
   const handleEdit = (item) => {
@@ -103,27 +104,27 @@ const handleDelete = (data) => {
   });
 };
 
-//   const handleRestore = (data) => {
-//     openConfirmation({
-//       title: 'Restore This User...',
-//       description: 'Are you sure you want to Restore this User!',
-//       cancelButtonText: 'Cancel',
-//       confirmButtonText: 'Restore',
-//       variant: 'contained',
-//       color: 'info',
-//       type: 'restore',
-//       onConfirm: async () => {
-//         try {
-//           const response = await restoreData({ id: data.id });
-//           snackbarNotification({
-//             message: response.message,
-//             severity: 'success',
-//           });
-//           dispatch(triggerIsSavingFlag(!isSaving));
-//         } catch (e) {}
-//       },
-//     });
-//   };
+  const handleRestore = (data) => {
+    openConfirmation({
+      title: 'Restore This order...',
+      description: 'Are you sure you want to Restore this order!',
+      cancelButtonText: 'Cancel',
+      confirmButtonText: 'Restore',
+      variant: 'contained',
+      color: 'info',
+      type: 'restore',
+      onConfirm: async () => {
+        try {
+          const response = await restoreData({ id: data.id });
+          snackbarNotification({
+            message: response.message,
+            severity: 'success',
+          });
+          dispatch(triggerIsSavingFlag(!isSaving));
+        } catch (e) {}
+      },
+    });
+  };
 
   // Configuration objects
 
@@ -139,7 +140,17 @@ const handleDelete = (data) => {
     }
   };
 const tableConfig = {
-  buttons: [
+  buttons:restoreIsDeleted
+      ? [
+          {
+            handleFunction: handleRestore,
+            title: 'Restore Item',
+            color: 'info',
+            name: 'Restore',
+          },
+        ]
+      :
+   [
     {
       handleFunction: handleView,
       title: 'View Item',
@@ -215,14 +226,14 @@ const tableConfig = {
         handleChange: () => handleDialogOpen('order_form_dialog'),
         // handleChange: () => handleDialogOpen('Add', 'user_add_form_dialog'),
       },
-    //   {
-    //     buttonTitle: restoreIsDeleted ? 'Back' : 'Restore Users',
-    //     buttonName: restoreIsDeleted ? 'Back' : 'Restore',
-    //     startIcon: restoreIsDeleted ? <IconArrowBackUpDouble /> : <IconUserCog />,
-    //     handleChange: handleRestoreChange,
-    //     sx: { minWidth: 100, width: 100 },
-    //     color: restoreIsDeleted ? 'warning' : 'info',
-    //   },
+      {
+        buttonTitle: restoreIsDeleted ? 'Back' : 'Restore Users',
+        buttonName: restoreIsDeleted ? 'Back' : 'Restore',
+        startIcon: restoreIsDeleted ? <IconArrowBackUpDouble /> : <IconUserCog />,
+        handleChange: handleRestoreChange,
+        sx: { minWidth: 100, width: 100 },
+        color: restoreIsDeleted ? 'warning' : 'info',
+      },
     ],
     tableData: {
       query,
