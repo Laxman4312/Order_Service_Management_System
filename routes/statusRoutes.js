@@ -9,14 +9,16 @@ const router = express.Router();
 
 // Order status routes
 router.get('/orders', statusController.getAllOrderStatuses);
-router.post('/orders/create', statusController.createOrderStatus);
-router.put('/orders/update/:id', statusController.updateOrderStatus);
-router.delete('/orders/delete/:id', statusController.deleteOrderStatus);
+router.post('/orders', statusController.createOrderStatus);
+router.put('/orders/:id', statusController.updateOrderStatus);
+router.delete('/orders/:id', statusController.deleteOrderStatus);
 
 // Service status routes
 router.get('/services', statusController.getAllServiceStatuses);
-router.post('/services/create', statusController.createServiceStatus);
-router.put('/services/update/:id', statusController.updateServiceStatus);
-router.delete('/services/delete/:id', statusController.deleteServiceStatus);
+router.post('/services', statusController.createServiceStatus);
+//router.put('/services/:id', statusController.updateServiceStatus);
+router.put('/services/:id', statusController.updateServiceStatus);
+
+router.delete('/services/:id', statusController.deleteServiceStatus);
 
 module.exports = router;

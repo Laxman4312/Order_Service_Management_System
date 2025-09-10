@@ -29,21 +29,110 @@ const serviceController = {
         }
     },
 
-    async getAllServices(req, res) {
-        try {
-            const filters = {
-                status_id: req.query.status_id,
-                service_date: req.query.service_date,
-                jobcard_no: req.query.jobcard_no
-            };
+    // async getAllServices(req, res) {
+    //     try {
+    //         const filters = {
+    //             status_id: req.query.status_id,
+    //             service_date: req.query.service_date,
+    //             jobcard_no: req.query.jobcard_no
+    //         };
             
-            const services = await Service.findAll(filters);
-            res.json(services);
-        } catch (error) {
-            res.status(500).json({ error: error.message });
-        }
-    },
+    //         const services = await Service.findAll(filters);
+    //         res.json(services);
+    //     } catch (error) {
+    //         res.status(500).json({ error: error.message });
+    //     }
+    // },
 
+
+// async getAllServices(req, res) {
+//     try {
+//         const filters = {
+//             status_id: req.query.status_id,
+//             service_date: req.query.service_date,
+//             jobcard_no: req.query.jobcard_no,
+//             customer_phone: req.query.customer_name
+//         };
+
+//         const services = await Service.findAll(filters);
+
+//         const servicesWithWhatsapp = await Promise.all(
+//             services.map(async (service) => {
+//                 try {
+//                     const message = await generateServiceMessage(service);
+//                     const phone = service.customer_phone?.replace(/\D/g, '');
+//                     const whatsappUrl = phone ? `https://wa.me/91${phone}?text=${encodeURIComponent(message)}` : null;
+
+//                     return {
+//                         ...service,
+//                         whatsappMessage: message,
+//                         whatsappUrl
+//                     };
+//                 } catch (err) {
+//                     // If message generation fails, still return the service
+//                     return {
+//                         ...service,
+//                         whatsappMessage: null,
+//                         whatsappUrl: null,
+//                         errorGeneratingMessage: err.message
+//                     };
+//                 }
+//             })
+//         );
+
+//         res.json(servicesWithWhatsapp);
+//     } catch (error) {
+//         res.status(500).json({ error: error.message });
+//     }
+// }
+async getAllServices(req, res) {
+    try {
+        // Build filter object
+        const filters = {
+            status_id: req.query.status_id,
+            service_date: req.query.service_date,
+        };
+
+        // Add search query for jobcard_no or customer_name
+        if (req.query.query) {
+            filters.query = req.query.query;
+        }
+
+        // Fetch filtered services
+        const services = await Service.findAll(filters);
+
+        // Enhance services with WhatsApp message and link
+        const servicesWithWhatsapp = await Promise.all(
+            services.map(async (service) => {
+                try {
+                    const message = await generateServiceMessage(service);
+                    const phone = service.customer_phone?.replace(/\D/g, '');
+                    const whatsappUrl = phone ? `https://wa.me/91${phone}?text=${encodeURIComponent(message)}` : null;
+
+                    return {
+                        ...service,
+                        whatsappMessage: message,
+                        whatsappUrl
+                    };
+                } catch (err) {
+                    return {
+                        ...service,
+                        whatsappMessage: null,
+                        whatsappUrl: null,
+                        errorGeneratingMessage: err.message
+                    };
+                }
+            })
+        );
+
+        res.json(servicesWithWhatsapp);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}
+
+
+,
     async getServiceById(req, res) {
         try {
             const service = await Service.findById(req.params.id);

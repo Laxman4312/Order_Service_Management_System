@@ -57,35 +57,98 @@ class Service {
         return `${datePrefix}${String(sequence).padStart(3, '0')}`;
     }
 
-    static async findAll(filters = {}) {
-        let query = `
-            SELECT s.*, ss.status_name 
-            FROM services s 
-            JOIN service_statuses ss ON s.status_id = ss.id 
-            WHERE 1=1
-        `;
-        const params = [];
+    // static async findAll(filters = {}) {
+    //     let query = `
+    //         SELECT s.*, ss.status_name 
+    //         FROM services s 
+    //         JOIN service_statuses ss ON s.status_id = ss.id 
+    //         WHERE 1=1
+    //     `;
+    //     const params = [];
 
-        if (filters.status_id) {
-            query += ' AND s.status_id = ?';
-            params.push(filters.status_id);
-        }
+    //     if (filters.status_id) {
+    //         query += ' AND s.status_id = ?';
+    //         params.push(filters.status_id);
+    //     }
 
-        if (filters.service_date) {
-            query += ' AND s.service_date = ?';
-            params.push(filters.service_date);
-        }
+    //     if (filters.service_date) {
+    //         query += ' AND s.service_date = ?';
+    //         params.push(filters.service_date);
+    //     }
 
-        if (filters.jobcard_no) {
-            query += ' AND s.jobcard_no LIKE ?';
-            params.push(`%${filters.jobcard_no}%`);
-        }
+    //     if (filters.jobcard_no) {
+    //         query += ' AND s.jobcard_no LIKE ?';
+    //         params.push(`%${filters.jobcard_no}%`);
+    //     }
 
-        query += ' ORDER BY s.created_at DESC';
+    //     query += ' ORDER BY s.created_at DESC';
 
-        const result = await queryAsync(query, params);
-        return result;
+    //     const result = await queryAsync(query, params);
+    //     return result;
+    // }
+// static async findAll(filters = {}) {
+//     let query = `
+//         SELECT s.*, ss.status_name, ss.message_template
+//         FROM services s
+//         JOIN service_statuses ss ON s.status_id = ss.id
+//         WHERE 1=1
+//     `;
+//     const params = [];
+
+//     if (filters.status_id) {
+//         query += ' AND s.status_id = ?';
+//         params.push(filters.status_id);
+//     }
+
+//     if (filters.service_date) {
+//         query += ' AND s.service_date = ?';
+//         params.push(filters.service_date);
+//     }
+
+//     if (filters.jobcard_no) {
+//         query += ' AND s.jobcard_no LIKE ?';
+//         params.push(`%${filters.jobcard_no}%`);
+//     }
+//         if (filters.customer_name) {
+//         sql += ' AND s.customer_name LIKE ?';
+//         params.push(`%${filters.customer_name}%`);
+//     }
+
+//     query += ' ORDER BY s.created_at DESC';
+
+//     const result = await queryAsync(query, params);
+//     return result;
+// }
+static async findAll(filters = {}) {
+    let sql = `
+        SELECT s.*, ss.status_name, ss.message_template
+        FROM services s
+        JOIN service_statuses ss ON s.status_id = ss.id
+        WHERE 1=1
+    `;
+    const params = [];
+
+    if (filters.status_id) {
+        sql += ' AND s.status_id = ?';
+        params.push(filters.status_id);
     }
+
+    if (filters.service_date) {
+        sql += ' AND s.service_date = ?';
+        params.push(filters.service_date);
+    }
+
+    if (filters.query) {
+        sql += ' AND (s.jobcard_no LIKE ? OR s.customer_name LIKE ?)';
+        params.push(`%${filters.query}%`, `%${filters.query}%`);
+    }
+
+    sql += ' ORDER BY s.created_at DESC';
+
+    const result = await queryAsync(sql, params);
+    return result;
+}
+
 
     static async findById(id) {
         const query = `

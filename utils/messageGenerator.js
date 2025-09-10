@@ -43,7 +43,7 @@ const generateServiceMessage = async (serviceDetails) => {
         message = message.replace(new RegExp(escapedToken, 'g'), value);
     }
     
-console.log('Generated service message:', message); 
+
     return message;
 };
 
