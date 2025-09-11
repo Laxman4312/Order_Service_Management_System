@@ -45,14 +45,7 @@ async update(id, data) {
 }
 
 
-  // async delete(params = {}) {
-  //   try {
-  //     return await this.axiosService.delete(`${this.endpoint}`, params);
-  //   } catch (error) {
-  //     console.error('Error in delete:', error);
-  //     throw error;
-  //   }
-  // }
+
   async delete(id) {
   try {
     return await this.axiosService.delete(`${this.endpoint}/${id}`);
@@ -70,6 +63,18 @@ async update(id, data) {
       throw error;
     }
   }
+async count(path = '', params = {}) {
+  try {
+    const url = `${this.endpoint}${path}`;
+    return await this.axiosService.get(url, { params });
+  } catch (error) {
+    console.error('Error in count:', error);
+    throw error;
+  }
+}
+
+
+
 // async restore(url) {
 //   try {
 //     return await this.axiosService.put(`${this.endpoint}${url}`);

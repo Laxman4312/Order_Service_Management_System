@@ -6,7 +6,7 @@ import PageView from 'components/Page';
 import OrderDialog from './OrderDialog';
 import { useOrders } from 'hooks/api-custom-hook/useOrders';
 import { usePagination } from 'components/custom-table/usePagination';
-import {  IconBrandWhatsapp } from '@tabler/icons-react';
+import { IconBrandWhatsapp } from '@tabler/icons-react';
 
 import { useRestore } from 'hooks/useRestore';
 import { useDebounce } from 'hooks/useDebounce';
@@ -56,12 +56,12 @@ const OrderManagement = () => {
   // Effects
   useEffect(() => {
     (async () => {
-      const params = {
-        page: page + 1,
-        pageSize: rowsPerPage,
-        query: debouncedQuery,
-        ...(restoreIsDeleted && { is_deleted: true }),
-      };
+       const params = {
+  page: page + 1,
+  pageSize: rowsPerPage,
+  query: debouncedQuery,
+  is_deleted: restoreIsDeleted ? true : false,
+};
       await fetchOrders(params);
     })();
   }, [page, rowsPerPage,restoreIsDeleted, isSaving, debouncedQuery, fetchOrders]);

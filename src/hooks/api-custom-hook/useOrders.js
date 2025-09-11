@@ -46,6 +46,16 @@ export const useOrders = () => {
       throw err;
     }
   }, []);
+
+const getOrdersCount = useCallback(async (params) => {
+  try {
+    const response = await orderRepository.count('/count', params); // path is now handled correctly
+    return response;
+  } catch (err) {
+    throw err;
+  }
+}, []);
+
   const { data, isLoading, isError, fetchData } = useDataFetching(fetchOrders);
 
   return {
@@ -56,7 +66,8 @@ export const useOrders = () => {
     createOrder,
     updateOrder,
     deleteOrder,
-    restoreData
+    restoreData,
+    getOrdersCount
    
  
   };

@@ -38,14 +38,32 @@ export const useServices = () => {
     }
   }, []);
 
-//   const restoreData = useCallback(async (params) => {
-//     try {
-//       const response = await binningRepository.restore(`/restore`, params);
-//       return response;
-//     } catch (err) {
-//       throw err;
-//     }
-//   }, []);
+  const restoreData = useCallback(async (params) => {
+    try {
+      const response = await serviceRepository.restore(`/restore`, params);
+      return response;
+    } catch (err) {
+      throw err;
+    }
+  }, []);
+  
+  // const getServicesCount = useCallback(async (params) => {
+  //   try {
+  //     const response = await serviceRepository.count(`/count`, params);
+  //     return response;
+  //   } catch (err) {
+  //     throw err;
+  //   }
+  // }, []);
+  const getServicesCount = useCallback(async (params) => {
+    try {
+      const response = await serviceRepository.count('/count', params); // path is now handled correctly
+      return response;
+    } catch (err) {
+      throw err;
+    }
+  }, []);
+  
   const { data, isLoading, isError, fetchData } = useDataFetching(fetchServices);
 
   return {
@@ -56,6 +74,8 @@ export const useServices = () => {
     createService,
     updateService,
     deleteService,
+    restoreData,
+    getServicesCount
    
  
   };
