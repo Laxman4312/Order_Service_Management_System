@@ -14,12 +14,15 @@ const router = express.Router();
 router.post('/', orderController.createOrder);
 router.get('/', orderController.getAllOrders);
 router.get('/export', orderController.exportOrders);
+router.get('/count', orderController.getOrderCount);
 router.get('/:id', orderController.getOrderById);
 
+
 router.delete('/:id', orderController.deleteOrder);
-router.put('/restore', orderController.restoreOrder); // for query/body
+router.put('/restore', orderController.restoreOrder); 
 router.put('/restore/:id', orderController.restoreOrder); // for param
 router.put('/:id', orderController.updateOrder);
+
 
 
 
